@@ -1,0 +1,817 @@
+:root {
+  --t-bg: #f5f5f5;
+  --t-surface: #ffffff;
+  --t-text: #1a1a1a;
+  --t-text-sec: #666666;
+  --t-accent: #d4a017;
+  --t-accent-light: #f5e6a3;
+  --t-border: #e0e0e0;
+  --t-overlay: rgba(0, 0, 0, 0.65);
+}
+
+[data-theme="dark"] {
+  --t-bg: #121212;
+  --t-surface: #1e1e1e;
+  --t-text: #ffffff;
+  --t-text-sec: #aaaaaa;
+  --t-accent: #f5c518;
+  --t-accent-light: #3a2e00;
+  --t-border: #333333;
+  --t-overlay: rgba(0, 0, 0, 0.65);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--t-bg);
+  color: var(--t-text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.t-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.t-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Header ---------- */
+.t-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 8px;
+}
+.t-header-side,
+.t-header-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.t-header-side {
+  justify-content: flex-start;
+}
+.t-header-right {
+  justify-content: flex-end;
+  gap: 8px;
+}
+.t-header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+}
+.t-title {
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.t-title-btn {
+  background: none;
+  border: none;
+  color: var(--t-text);
+  font-size: 20px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 8px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.t-title-btn:hover {
+  opacity: 0.7;
+}
+
+/* ---------- Buttons ---------- */
+.t-btn {
+  border-radius: 12px;
+  border: 1px solid var(--t-border);
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  background: var(--t-surface);
+  color: var(--t-text);
+  transition: opacity 0.12s ease, transform 0.08s ease;
+}
+.t-btn:hover:not(:disabled) {
+  opacity: 0.8;
+}
+.t-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.t-btn:disabled {
+  opacity: 0.5;
+}
+.t-btn-outline {
+  background: var(--t-surface);
+  color: var(--t-text);
+}
+.t-btn-cta {
+  background: var(--t-accent);
+  border-color: var(--t-accent);
+  color: var(--t-bg);
+}
+.t-btn-menu {
+  margin-top: 12px;
+  min-width: 200px;
+}
+.t-icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  border: 1px solid var(--t-border);
+  background: var(--t-surface);
+  color: var(--t-accent);
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.t-icon-btn:hover {
+  opacity: 0.7;
+}
+
+/* ---------- Home ---------- */
+.t-home {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.t-home-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 32px;
+}
+.t-home-icon {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+.t-divider {
+  width: 60px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--t-accent);
+  margin-bottom: 20px;
+}
+.t-donate {
+  position: absolute;
+  right: 20px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 9999px;
+  border: 1px solid var(--t-border);
+  background: var(--t-surface);
+  color: var(--t-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+.t-donate:hover {
+  opacity: 0.8;
+}
+.t-donate-icon {
+  color: var(--t-accent);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* ---------- Score ---------- */
+.t-score {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 48px;
+}
+.t-favorite-row {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+.t-favorite-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: 1px solid var(--t-border);
+  background: var(--t-surface);
+  color: var(--t-text);
+  font-size: 14px;
+  font-weight: 700;
+}
+.t-favorite-btn:hover {
+  opacity: 0.8;
+}
+.t-star {
+  color: var(--t-text-sec);
+  font-size: 20px;
+  font-weight: 800;
+}
+.t-star-on {
+  color: var(--t-accent);
+}
+.t-board {
+  flex: 1;
+  display: flex;
+}
+.t-board-divider {
+  width: 2px;
+  align-self: stretch;
+  background: var(--t-accent);
+  border-radius: 1px;
+  margin: 24px 0;
+}
+.t-team {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  min-width: 0;
+}
+.t-team-label-btn {
+  background: none;
+  border: none;
+  color: var(--t-text-sec);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 8px;
+  max-width: 100%;
+  margin-bottom: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.t-team-label-btn:hover {
+  opacity: 0.6;
+}
+.t-turn-slot {
+  height: 26px;
+  display: flex;
+  align-items: center;
+}
+.t-turn-badge {
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: var(--t-accent-light);
+}
+.t-turn-badge-text {
+  color: var(--t-accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+.t-score-number {
+  font-size: 68px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 20px;
+}
+.t-controls {
+  display: flex;
+  gap: 12px;
+}
+.t-ctrl {
+  width: 56px;
+  height: 56px;
+  font-size: 26px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.t-group {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid var(--t-border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 320px;
+}
+.t-group-row {
+  display: flex;
+  gap: 8px;
+}
+.t-aux {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+.t-aux-flex {
+  flex: 1;
+}
+.t-aux-label {
+  font-weight: 700;
+}
+.t-aux-points {
+  color: var(--t-accent);
+  font-weight: 800;
+}
+.t-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+}
+.t-flor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 8px 20px;
+  font-size: 15px;
+}
+.t-flor-emoji {
+  font-size: 18px;
+}
+.t-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 12px 24px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--t-text-sec);
+}
+.t-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--t-overlay);
+  z-index: 10;
+}
+.t-overlay-emoji {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+.t-overlay-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--t-accent);
+  margin-bottom: 24px;
+}
+.t-overlay-btn {
+  min-width: 220px;
+}
+.t-overlay-btn-secondary {
+  margin-top: 12px;
+}
+
+/* ---------- Confetti ---------- */
+.t-confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 11;
+}
+.t-confetti-piece {
+  position: absolute;
+  top: -40px;
+  border-radius: 3px;
+  animation: t-fall 2.6s linear infinite;
+}
+@keyframes t-fall {
+  0% {
+    transform: translateY(-40px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0.9;
+  }
+}
+
+/* ---------- Modal ---------- */
+.t-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 24px 24px;
+  z-index: 100;
+}
+.t-modal-backdrop-touch {
+  position: absolute;
+  inset: 0;
+}
+.t-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--t-surface);
+  border-radius: 16px;
+  padding: 20px;
+  animation: t-pop 0.15s ease;
+}
+@keyframes t-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.t-modal-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.t-modal-title {
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.t-modal-title-flex {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.t-modal-caption {
+  font-size: 13px;
+  color: var(--t-text-sec);
+  text-align: center;
+  line-height: 18px;
+  margin-bottom: 16px;
+}
+.t-modal-text {
+  font-size: 14px;
+  color: var(--t-text-sec);
+  line-height: 21px;
+  text-align: center;
+  margin: 0 0 12px;
+}
+.t-modal-empty {
+  font-size: 14px;
+  color: var(--t-text-sec);
+  text-align: center;
+  margin: 24px 0;
+}
+.t-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+.t-modal-actions .t-btn {
+  flex: 1;
+}
+.t-modal-close {
+  width: 100%;
+  margin-top: 8px;
+}
+.t-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.t-modal-back {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.t-modal-back-spacer {
+  background: transparent;
+  border: none;
+}
+.t-modal-subheader {
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.t-modal-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin: 0 -4px;
+  padding: 0 4px;
+}
+.t-input {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--t-border);
+  background: var(--t-bg);
+  color: var(--t-text);
+  padding: 12px 14px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.t-input::placeholder {
+  color: var(--t-text-sec);
+}
+.t-counter {
+  font-size: 12px;
+  font-weight: 600;
+  text-align: right;
+  color: var(--t-text-sec);
+  margin-top: 6px;
+}
+
+/* ---------- Rules ---------- */
+.t-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.t-tab {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--t-border);
+  background: var(--t-bg);
+  color: var(--t-text);
+  font-size: 14px;
+  font-weight: 700;
+}
+.t-tab-active {
+  background: var(--t-text);
+  border-color: var(--t-text);
+  color: var(--t-bg);
+}
+.t-rule {
+  margin-bottom: 16px;
+}
+.t-rule-title {
+  color: var(--t-accent);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.t-rule-text {
+  font-size: 13px;
+  color: var(--t-text-sec);
+  line-height: 18px;
+  margin: 0 0 6px;
+}
+
+/* ---------- Donate ---------- */
+.t-qr-wrap {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  align-self: center;
+  margin: 8px 0;
+}
+.t-qr {
+  width: 220px;
+  height: 220px;
+  display: block;
+}
+
+/* ---------- History ---------- */
+.t-filter-block {
+  border: 1px solid var(--t-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+.t-filter-caption {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  text-align: center;
+  color: var(--t-text-sec);
+  margin-bottom: 8px;
+}
+.t-filter-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.t-chip {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  border: 1px solid var(--t-border);
+  background: var(--t-bg);
+  color: var(--t-text);
+  font-size: 12px;
+  font-weight: 700;
+}
+.t-chip-active {
+  background: var(--t-text);
+  border-color: var(--t-text);
+  color: var(--t-bg);
+}
+.t-summary-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--t-border);
+  margin-bottom: 4px;
+}
+.t-summary-spacer {
+  flex: 1;
+}
+.t-summary-team {
+  width: 44px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--t-accent);
+  text-align: center;
+}
+.t-summary-value {
+  width: 44px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.t-event-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+}
+.t-event-time {
+  font-size: 12px;
+  width: 56px;
+  flex-shrink: 0;
+  color: var(--t-text-sec);
+}
+.t-event-text {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 0;
+}
+.t-event-team {
+  color: var(--t-accent);
+}
+.t-event-delta {
+  font-size: 13px;
+  font-weight: 800;
+  min-width: 24px;
+  text-align: right;
+  color: var(--t-accent);
+  font-variant-numeric: tabular-nums;
+}
+.t-event-delta-neg {
+  color: var(--t-text-sec);
+}
+.t-event-vdivider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--t-border);
+  margin: 0 4px;
+}
+.t-match-row-wrap {
+  position: relative;
+  margin-bottom: 8px;
+}
+.t-match-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 12px 44px 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--t-border);
+  background: var(--t-surface);
+  color: var(--t-text);
+  font-size: 14px;
+}
+.t-match-row:hover {
+  opacity: 0.8;
+}
+.t-match-row-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.t-match-row-subtitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--t-text-sec);
+  margin-top: -2px;
+}
+.t-match-row-star {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+}
+.t-score-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.t-team-label {
+  color: var(--t-accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+.t-score-value {
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.t-score-sep {
+  color: var(--t-text-sec);
+  font-size: 13px;
+  font-weight: 600;
+}
+.t-finished-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+.t-finished-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--t-accent);
+}
+.t-finished-label {
+  color: var(--t-accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ---------- Responsive: mobile usa tela cheia ---------- */
+@media (min-width: 720px) {
+  .t-shell {
+    align-items: center;
+  }
+  .t-main {
+    width: 100%;
+    max-width: 860px;
+  }
+}
