@@ -7,7 +7,7 @@ type Props = {
   onTitlePress?: () => void;
 };
 
-export function Header({ title, onBack, onOpenHistory, onTitlePress }: Props) {
+export function AppHeader({ title, onBack, onOpenHistory, onTitlePress }: Props) {
   return (
     <header className="t-header">
       <div className="t-header-side">

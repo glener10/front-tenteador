@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Header } from "./components/Header";
+import { AppHeader } from "./components/app/AppHeader";
+import { AppFooter } from "./components/app/AppFooter";
 import { HistoryModal } from "./components/HistoryModal";
 import { NameEditModal } from "./components/NameEditModal";
 import { RulesModal } from "./components/RulesModal";
 import { DonateModal } from "./components/DonateModal";
-import { ThemeProvider } from "./theme";
+import { ThemeProvider } from "./hooks/useTheme";
 import { HomeScreen } from "./screens/HomeScreen";
 import { ScoreScreen } from "./screens/ScoreScreen";
 import {
@@ -32,7 +33,7 @@ function AppContent() {
 
   return (
     <div className="t-shell">
-      <Header
+      <AppHeader
         title={screen === "match" ? (activeMatch?.name ?? "Partida") : undefined}
         onBack={screen === "match" ? () => setScreen("home") : undefined}
         onOpenHistory={screen === "match" ? () => setHistoryOpen(true) : undefined}
@@ -42,9 +43,7 @@ function AppContent() {
         {screen === "home" ? (
           <HomeScreen
             onStartMatch={startMatch}
-            onOpenAbout={() => setRulesOpen(true)}
             onOpenHistory={() => setHistoryOpen(true)}
-            onOpenDonate={() => setDonateOpen(true)}
           />
         ) : activeMatch ? (
           <ScoreScreen
@@ -54,6 +53,10 @@ function AppContent() {
           />
         ) : null}
       </div>
+      <AppFooter
+        onOpenAbout={() => setRulesOpen(true)}
+        onOpenDonate={() => setDonateOpen(true)}
+      />
 
       <RulesModal visible={rulesOpen} onClose={() => setRulesOpen(false)} />
       <DonateModal visible={donateOpen} onClose={() => setDonateOpen(false)} />

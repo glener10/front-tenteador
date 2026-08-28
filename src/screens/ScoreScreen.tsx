@@ -158,7 +158,7 @@ export function ScoreScreen({ match, onExit, onMatchChange }: Props) {
         />
       </div>
 
-      {showFooter ? <div className="t-footer">Se está jogando em trios, não tem mais testa.</div> : null}
+      {showFooter ? <div className="t-score-hint">Se está jogando em trios, não tem mais testa.</div> : null}
 
       {winner ? (
         <>

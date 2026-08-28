@@ -1,15 +1,13 @@
 import iconDark from "../../assets/icon_dark_v2.png";
 import iconLight from "../../assets/icon_light_v2.png";
-import { useTheme } from "../theme";
+import { useTheme } from "../hooks/useTheme";
 
 type Props = {
   onStartMatch: () => void;
-  onOpenAbout: () => void;
   onOpenHistory: () => void;
-  onOpenDonate: () => void;
 };
 
-export function HomeScreen({ onStartMatch, onOpenAbout, onOpenHistory, onOpenDonate }: Props) {
+export function HomeScreen({ onStartMatch, onOpenHistory }: Props) {
   const { mode } = useTheme();
   const icon = mode === "dark" ? iconDark : iconLight;
 
@@ -24,14 +22,7 @@ export function HomeScreen({ onStartMatch, onOpenAbout, onOpenHistory, onOpenDon
         <button type="button" className="t-btn t-btn-menu" onClick={onOpenHistory}>
           Histórico de partidas
         </button>
-        <button type="button" className="t-btn t-btn-menu" onClick={onOpenAbout}>
-          Sobre o jogo
-        </button>
       </div>
-      <button type="button" className="t-donate" onClick={onOpenDonate}>
-        <span className="t-donate-icon">☕</span>
-        <span>Ajude o dev a comprar café</span>
-      </button>
     </div>
   );
 }
