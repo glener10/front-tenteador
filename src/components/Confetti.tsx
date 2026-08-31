@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 
 const NUM_PIECES = 45;
-const COLORS = ["#FFC32B", "#FFE07A", "#FF6F9C", "#47DD8A", "#4EC5F1", "#7C3AED", "#FF8C42"];
+// Tricolor gaúcho do ícone, com variações claras para dar volume.
+const COLORS = ["#55993A", "#6CB44E", "#D3211D", "#E64A45", "#F5C012", "#FFE07A", "#FFFDF5"];
 
 type Piece = {
   id: number;
