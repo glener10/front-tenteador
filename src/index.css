@@ -509,7 +509,13 @@ button:disabled {
   background: none;
   border: none;
   color: var(--t-text-sec);
-  font-size: calc(var(--u) * 2.7);
+  /* Mesma ideia dos botões de ação: o tamanho desejado escala com a
+     largura do quadro (cqw), com piso e teto em unidades de altura (u).
+     No celular a largura é curta e o piso de 2.7u manda — nada muda.
+     No desktop --u trava no teto em px enquanto sobra largura, então o
+     nome do time acompanha o quadro em vez de ficar minúsculo ao lado
+     do placar; o teto de 5.2u impede que ele coma a altura do painel. */
+  font-size: clamp(calc(var(--u) * 2.7), 4.4cqw, calc(var(--u) * 5.2));
   font-weight: 800;
   padding: calc(var(--u) * 0.3) calc(var(--u) * 1.2);
   border-radius: 12px;
@@ -522,6 +528,11 @@ button:disabled {
 }
 .t-team-label-btn:hover {
   transform: rotate(-2deg) scale(1.06);
+}
+.t-team-label-btn .t-team-label {
+  color: var(--t-accent);
+  font-size: inherit;
+  font-weight: 800;
 }
 .t-turn-slot {
   flex: none;
@@ -1125,7 +1136,7 @@ button:disabled {
   justify-content: center;
   gap: 10px;
 }
-.t-team-label {
+.t-score-row .t-team-label {
   color: var(--t-accent);
   font-size: 13px;
   font-weight: 800;
@@ -1212,7 +1223,7 @@ button:disabled {
   }
   .t-match-row-subtitle,
   .t-score-sep,
-  .t-team-label {
+  .t-score-row .t-team-label {
     font-size: 14px;
   }
   .t-score-value {
