@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 const NUM_PIECES = 45;
-const COLORS = ["#D4A017", "#F5C518", "#FFD700", "#FF6B6B", "#4ECDC4", "#7B68EE", "#FF8C42"];
+const COLORS = ["#FFC32B", "#FFE07A", "#FF6F9C", "#47DD8A", "#4EC5F1", "#7C3AED", "#FF8C42"];
 
 type Piece = {
   id: number;
