@@ -127,16 +127,24 @@ button:disabled {
   outline-offset: 3px;
 }
 
+/* O app ocupa exatamente a viewport e nunca rola: cada seção é um item
+   flex que pode encolher (min-height: 0), e o conteúdo do placar é
+   dimensionado em unidades de container (cqh) para caber sempre.
+   `dvh` acompanha a barra de endereço no mobile. */
 .t-shell {
-  min-height: 100%;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .t-main {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 /* ---------- Receita cartoon compartilhada ----------
@@ -230,7 +238,9 @@ button:disabled {
   z-index: 20;
   display: flex;
   align-items: center;
-  padding: 12px 10px 14px 14px;
+  flex: none;
+  padding: clamp(5px, 1.3vh, 14px) clamp(6px, 1vw, 14px) clamp(6px, 1.4vh, 16px)
+    clamp(10px, 1.6vw, 18px);
   gap: 8px;
   background: var(--t-bar);
   backdrop-filter: blur(10px);
@@ -258,7 +268,7 @@ button:disabled {
 }
 .t-title,
 .t-title-btn {
-  font-size: 21px;
+  font-size: clamp(15px, 2.6vh, 26px);
   font-weight: 800;
   white-space: nowrap;
   overflow: hidden;
@@ -280,13 +290,14 @@ button:disabled {
 
 /* Botão "‹ Menu" do header mais compacto */
 .t-header .t-btn {
-  padding: 9px 16px;
-  font-size: 14px;
+  padding: clamp(6px, 1.1vh, 12px) clamp(10px, 1.6vw, 20px);
+  font-size: clamp(12px, 1.9vh, 16px);
   border-radius: 14px;
 }
 
 /* ---------- Footer ---------- */
 .t-footer {
+  flex: none;
   margin-top: auto;
   border-top: var(--t-outline) solid var(--t-ink);
   background: var(--t-bar);
@@ -298,17 +309,17 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 16px;
+  gap: clamp(6px, 1.2vw, 12px);
+  padding: clamp(6px, 1.4vh, 16px) 12px;
   flex-wrap: wrap;
 }
 .t-footer-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 18px;
+  padding: clamp(6px, 1.1vh, 12px) clamp(12px, 1.9vw, 22px);
   border-radius: 9999px;
-  font-size: 14px;
+  font-size: clamp(11px, 1.8vh, 15px);
   --t-lift: 4px;
 }
 
@@ -332,22 +343,22 @@ button:disabled {
   background: linear-gradient(#fff0b8, var(--t-cta));
 }
 .t-btn-menu {
-  margin-top: 14px;
-  min-width: 200px;
+  margin-top: clamp(8px, 1.6vh, 14px);
 }
 .t-home-body .t-btn {
-  min-width: 230px;
-  font-size: 18px;
-  padding: 16px 28px;
-  border-radius: 22px;
-  --t-lift: 7px;
+  flex: none;
+  min-width: min(280px, 78vw);
+  font-size: clamp(15px, 2.5vh, 21px);
+  padding: clamp(10px, 1.9vh, 18px) clamp(20px, 4vw, 34px);
+  border-radius: clamp(16px, 2.6vh, 26px);
+  --t-lift: clamp(4px, 0.9vh, 8px);
 }
 .t-icon-btn {
-  width: 46px;
-  height: 46px;
+  width: clamp(34px, 5.6vh, 52px);
+  height: clamp(34px, 5.6vh, 52px);
   border-radius: 50%;
   color: var(--t-accent);
-  font-size: 20px;
+  font-size: clamp(15px, 2.5vh, 23px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -358,23 +369,27 @@ button:disabled {
 /* ---------- Home ---------- */
 .t-home {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 .t-home-body {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 32px;
+  justify-content: center;
+  padding: clamp(8px, 2vh, 24px) clamp(16px, 4vw, 32px);
 }
 .t-home-icon {
-  width: 100%;
-  max-width: 520px;
+  width: auto;
+  max-width: min(620px, 100%);
+  max-height: 40vh;
   height: auto;
-  margin-top: 16px;
-  margin-bottom: 20px;
+  margin: 0 0 clamp(10px, 2.4vh, 24px);
+  object-fit: contain;
   animation: t-float 5s ease-in-out infinite;
 }
 @keyframes t-float {
@@ -387,11 +402,12 @@ button:disabled {
   }
 }
 .t-divider {
-  width: 92px;
-  height: 16px;
+  flex: none;
+  width: clamp(70px, 12vh, 110px);
+  height: clamp(10px, 1.9vh, 18px);
   border-radius: 9999px;
   border: var(--t-outline) solid var(--t-ink);
-  margin-bottom: 22px;
+  margin-bottom: clamp(10px, 2.2vh, 22px);
   background: linear-gradient(
     90deg,
     var(--t-flag-green) 0 33.34%,
@@ -404,75 +420,101 @@ button:disabled {
   font-weight: 800;
 }
 
-/* ---------- Placar ---------- */
+/* ---------- Placar ----------
+   O quadro (.t-board) é um container de tamanho, e tudo dentro dele é
+   medido em múltiplos de --u, uma unidade derivada da altura do próprio
+   quadro (1cqh) e limitada pela largura (cqw) e por um teto em px.
+   A soma das alturas dos blocos fica em ~92 unidades, então o placar
+   cabe por construção em qualquer tela, sem rolagem. */
 .t-score {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  position: relative;
-  padding-bottom: 52px;
 }
 .t-favorite-row {
+  flex: none;
   display: flex;
   justify-content: center;
-  padding: 14px 10px 4px;
+  padding: clamp(4px, 1.2vh, 14px) 10px clamp(2px, 0.5vh, 6px);
 }
 .t-favorite-btn {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 18px;
+  padding: clamp(5px, 1vh, 10px) clamp(12px, 2.4vw, 24px);
   border-radius: 9999px;
-  font-size: 14px;
+  font-size: clamp(11px, 1.8vh, 15px);
   --t-lift: 4px;
 }
 .t-star {
   color: var(--t-text-sec);
-  font-size: 20px;
+  font-size: 1.4em;
   font-weight: 800;
 }
 .t-star-on {
   color: var(--t-star);
   text-shadow: 0 0 0 var(--t-ink), 0 2px 0 rgba(26, 35, 19, 0.3);
 }
+
 .t-board {
   flex: 1;
+  min-height: 0;
   display: flex;
-  padding-top: 6px;
+  container-type: size;
 }
 .t-board-divider {
-  width: 8px;
+  flex: none;
+  width: clamp(5px, 1.1cqh, 12px);
   align-self: stretch;
   border-radius: 9999px;
-  margin: 26px 6px;
+  margin: 4cqh clamp(4px, 0.9cqh, 10px);
   background: repeating-linear-gradient(
-    var(--t-flag-green) 0 38px,
-    transparent 38px 58px,
-    var(--t-flag-red) 58px 96px,
-    transparent 96px 116px,
-    var(--t-flag-yellow) 116px 154px,
-    transparent 154px 174px
+    var(--t-flag-green) 0 5.5cqh,
+    transparent 5.5cqh 8.5cqh,
+    var(--t-flag-red) 8.5cqh 14cqh,
+    transparent 14cqh 17cqh,
+    var(--t-flag-yellow) 17cqh 22.5cqh,
+    transparent 22.5cqh 25.5cqh
   );
 }
+
+/* --u é registrada como <length> para que seu valor seja calculado uma
+   única vez, em .t-team, e herdado já resolvido em px. Sem o registro, as
+   unidades cq* seriam reavaliadas em cada descendente: dentro de .t-group
+   (container inline-size) o cqw passa a medir o próprio painel, o que
+   encolhia os botões de Truco/Envido em telas largas. */
+@property --u {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 .t-team {
+  /* Escala de tudo no placar. A altura do quadro manda (cqh); cqw evita
+     desproporção em telas estreitas e o teto em px, em telas enormes.
+     Os coeficientes foram calibrados medindo o uso da altura em ~20
+     tamanhos de tela — o conteúdo ocupa ~90-98% do quadro. */
+  --u: min(0.95cqh, 2.6cqw, 12px);
+  --t-outline: max(2px, calc(var(--u) * 0.4));
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 8px;
-  min-width: 0;
+  padding: 0 calc(var(--u) * 0.8);
 }
 .t-team-label-btn {
   background: none;
   border: none;
   color: var(--t-text-sec);
-  font-size: 17px;
+  font-size: calc(var(--u) * 2.7);
   font-weight: 800;
-  padding: 4px 10px;
+  padding: calc(var(--u) * 0.3) calc(var(--u) * 1.2);
   border-radius: 12px;
   max-width: 100%;
-  margin-bottom: 4px;
+  margin-bottom: calc(var(--u) * 0.4);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -482,16 +524,17 @@ button:disabled {
   transform: rotate(-2deg) scale(1.06);
 }
 .t-turn-slot {
-  height: 30px;
+  flex: none;
+  height: calc(var(--u) * 4.2);
   display: flex;
   align-items: center;
 }
 .t-turn-badge {
-  padding: 4px 14px;
+  padding: calc(var(--u) * 0.45) calc(var(--u) * 1.9);
   border-radius: 9999px;
   background: var(--t-accent-light);
-  border: 2px solid var(--t-ink);
-  box-shadow: 0 3px 0 var(--t-btn-shade);
+  border: max(1.5px, calc(var(--u) * 0.28)) solid var(--t-ink);
+  box-shadow: 0 calc(var(--u) * 0.45) 0 var(--t-btn-shade);
   animation: t-wobble 2.4s ease-in-out infinite;
 }
 @keyframes t-wobble {
@@ -505,7 +548,7 @@ button:disabled {
 }
 .t-turn-badge-text {
   color: var(--t-accent);
-  font-size: 12px;
+  font-size: calc(var(--u) * 1.9);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -513,31 +556,33 @@ button:disabled {
 
 /* Números do placar com contorno de desenho animado */
 .t-score-number {
-  font-size: 84px;
+  flex: none;
+  font-size: calc(var(--u) * 16);
   line-height: 1.05;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
-  margin: 2px 0 20px;
+  margin: 0 0 calc(var(--u) * 1.8);
   color: var(--t-cta);
-  -webkit-text-stroke: 6px var(--t-ink);
+  -webkit-text-stroke: calc(var(--u) * 0.8) var(--t-ink);
   paint-order: stroke fill;
-  text-shadow: 0 5px 0 var(--t-drop);
+  text-shadow: 0 calc(var(--u) * 0.7) 0 var(--t-drop);
 }
 
 .t-controls {
+  flex: none;
   display: flex;
-  gap: 14px;
+  gap: calc(var(--u) * 2);
 }
-.t-ctrl {
-  width: 62px;
-  height: 62px;
-  font-size: 30px;
+.t-team .t-ctrl {
+  width: calc(var(--u) * 9.5);
+  height: calc(var(--u) * 9.5);
+  font-size: calc(var(--u) * 4.4);
   padding: 0;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  --t-lift: 6px;
+  --t-lift: calc(var(--u) * 0.9);
 }
 /* "+" verde, "−" vermelho: leitura instantânea, bem cartoon */
 .t-controls .t-ctrl:first-child {
@@ -555,74 +600,81 @@ button:disabled {
 
 /* Painéis de ações */
 .t-group {
+  flex: none;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 10px;
-  margin-top: 14px;
-  padding: 12px;
+  gap: calc(var(--u) * 1.4);
+  margin-top: calc(var(--u) * 1.8);
+  padding: calc(var(--u) * 1.5);
   border: var(--t-outline) solid var(--t-ink);
-  border-radius: 22px;
+  border-radius: calc(var(--u) * 3);
   background: var(--t-accent-light);
-  box-shadow: 0 5px 0 var(--t-btn-shade), 0 8px 12px var(--t-drop);
+  box-shadow: 0 calc(var(--u) * 0.8) 0 var(--t-btn-shade),
+    0 calc(var(--u) * 1.3) calc(var(--u) * 2) var(--t-drop);
   width: 100%;
-  max-width: 320px;
+  max-width: calc(var(--u) * 52);
+  container-type: inline-size;
 }
 .t-group-row {
   display: flex;
-  gap: 10px;
+  gap: calc(var(--u) * 1.4);
 }
-.t-group .t-btn {
-  border-radius: 14px;
-  --t-lift: 4px;
+.t-team .t-group .t-btn {
+  border-radius: calc(var(--u) * 2);
+  --t-lift: calc(var(--u) * 0.7);
 }
-.t-aux {
+.t-team .t-aux,
+.t-team .t-block {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  padding: 9px 10px;
-  font-size: 13px;
+  min-width: 0;
+  gap: calc(var(--u) * 0.6);
+  padding: calc(var(--u) * 1.35) calc(var(--u) * 1.5);
+  white-space: nowrap;
+  /* 2.3u é o tamanho desejado; o segundo termo é o máximo que o par mais
+     largo da linha ("Truco" + "Retruco") suporta na largura do painel:
+     100cqi é a largura interna dele, e 0.6u desconta paddings e bordas.
+     Os dois compartilham a mesma fórmula para ficarem do mesmo tamanho. */
+  font-size: min(calc(var(--u) * 2.3), calc(10.7cqi - var(--u) * 0.6));
+}
+.t-team .t-aux {
+  padding-left: calc(var(--u) * 0.7);
+  padding-right: calc(var(--u) * 0.7);
 }
 .t-aux-flex {
   flex: 1;
 }
 .t-aux-label {
   font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .t-aux-points {
   color: var(--t-points);
   font-weight: 800;
 }
-.t-block {
+.t-team .t-flor {
+  flex: none;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 16px;
-  font-size: 14px;
-}
-.t-flor {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 14px;
-  padding: 10px 22px;
-  font-size: 15px;
+  gap: calc(var(--u) * 1);
+  margin-top: calc(var(--u) * 1.8);
+  padding: calc(var(--u) * 1.35) calc(var(--u) * 3);
+  font-size: calc(var(--u) * 2.4);
+  white-space: nowrap;
   border-radius: 9999px;
-  --t-lift: 5px;
+  --t-lift: calc(var(--u) * 0.8);
 }
 .t-flor-emoji {
-  font-size: 18px;
+  font-size: 1.2em;
 }
 .t-score-hint {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex: none;
   text-align: center;
-  padding: 12px 24px;
-  font-size: 13px;
+  padding: clamp(4px, 1vh, 12px) 20px;
+  font-size: clamp(10px, 1.7vh, 15px);
   font-weight: 700;
   color: var(--t-text-sec);
 }
@@ -635,24 +687,27 @@ button:disabled {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: clamp(12px, 3vh, 32px);
+  overflow: hidden;
   background: var(--t-bg);
   z-index: 10;
 }
 .t-overlay-emoji {
-  font-size: 88px;
-  margin-bottom: 8px;
+  font-size: clamp(40px, 10vh, 108px);
+  line-height: 1;
+  margin-bottom: clamp(4px, 1vh, 12px);
   animation: t-pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both,
     t-wobble 2.2s ease-in-out 0.5s infinite;
 }
 .t-overlay-title {
-  font-size: 40px;
+  font-size: clamp(24px, 6vh, 58px);
   line-height: 1.15;
   font-weight: 800;
   text-align: center;
-  padding: 0 24px;
-  margin-bottom: 28px;
+  padding: 0 12px;
+  margin-bottom: clamp(14px, 3.4vh, 34px);
   color: var(--t-cta);
-  -webkit-text-stroke: 7px var(--t-ink);
+  -webkit-text-stroke: clamp(3px, 0.8vh, 9px) var(--t-ink);
   paint-order: stroke fill;
   text-shadow: 0 6px 0 var(--t-drop);
   animation: t-pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s both;
@@ -672,10 +727,10 @@ button:disabled {
   }
 }
 .t-overlay-btn {
-  min-width: 240px;
+  min-width: min(300px, 80vw);
 }
 .t-overlay-btn-secondary {
-  margin-top: 14px;
+  margin-top: clamp(8px, 1.6vh, 14px);
 }
 
 /* ---------- Confete ---------- */
@@ -713,7 +768,7 @@ button:disabled {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 48px 20px 24px;
+  padding: clamp(12px, 5vh, 48px) 16px clamp(12px, 3vh, 24px);
   z-index: 100;
 }
 .t-modal-backdrop-touch {
@@ -724,7 +779,7 @@ button:disabled {
   position: relative;
   width: 100%;
   max-width: 480px;
-  max-height: 88vh;
+  max-height: calc(100dvh - clamp(24px, 8vh, 72px));
   display: flex;
   flex-direction: column;
   background: var(--t-surface);
@@ -753,6 +808,8 @@ button:disabled {
   min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .t-modal-title {
   font-size: 24px;
@@ -835,9 +892,9 @@ button:disabled {
 .t-modal-scroll {
   flex: 1;
   min-height: 0;
+  overflow-x: hidden;
   overflow-y: auto;
-  margin: 0 -4px;
-  padding: 4px;
+  padding: 4px 0;
 }
 .t-input {
   width: 100%;
@@ -914,8 +971,8 @@ button:disabled {
   box-shadow: 0 6px 0 var(--t-btn-shade);
 }
 .t-qr {
-  width: 220px;
-  height: 220px;
+  width: min(220px, 46vh);
+  height: min(220px, 46vh);
   display: block;
 }
 
@@ -1102,12 +1159,137 @@ button:disabled {
   font-weight: 800;
 }
 
-/* ---------- Responsivo: desktop centra o conteúdo ---------- */
+/* ---------- Responsivo ----------
+   Header, rodapé, home e modais escalam por clamp() em vh/vw; o placar
+   escala pelas unidades de container (ver .t-team). Aqui ficam só as
+   mudanças de layout e os limites de largura. */
 @media (min-width: 720px) {
+  :root {
+    --t-outline: 3.5px;
+  }
   .t-main {
     width: 100%;
-    max-width: 860px;
+    max-width: 1040px;
     margin: 0 auto;
+  }
+  .t-btn {
+    padding: 15px 28px;
+    font-size: 17px;
+  }
+  .t-modal-card {
+    max-width: 560px;
+    padding: 26px;
+  }
+  .t-modal-title {
+    font-size: 27px;
+  }
+  .t-modal-caption,
+  .t-modal-text,
+  .t-modal-empty {
+    font-size: 15px;
+    line-height: 23px;
+  }
+  .t-modal-subheader {
+    font-size: 17px;
+  }
+  .t-tab {
+    padding: 13px 10px;
+    font-size: 15px;
+  }
+  .t-rule-title {
+    font-size: 17px;
+  }
+  .t-rule-text {
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .t-chip {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+  .t-match-row-title {
+    font-size: 17px;
+  }
+  .t-match-row-subtitle,
+  .t-score-sep,
+  .t-team-label {
+    font-size: 14px;
+  }
+  .t-score-value {
+    font-size: 18px;
+  }
+  .t-event-text,
+  .t-event-time {
+    font-size: 14px;
+  }
+  .t-input {
+    padding: 15px 18px;
+    font-size: 17px;
+  }
+}
+
+/* Telas largas E deitadas: os dois painéis de ações de cada time ficam
+   lado a lado. Troca altura por largura — que é o que sobra no desktop —
+   e libera ~26 unidades de altura, então --u pode crescer ~30%.
+   O recorte por proporção importa: dividir a coluna em duas só compensa
+   quando o quadro é bem mais largo que alto (~1.5x) — o painel precisa de
+   ~31u de largura para não encolher o texto. Em tablet em pé (912x1368) ou
+   em telas quadradas (1000x1000) sobra altura e falta largura, então a
+   coluna única entrega painéis maiores. */
+@media (min-width: 860px) and (min-aspect-ratio: 13 / 10) {
+  .t-team {
+    --u: min(1.23cqh, 2.2cqw, 15px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: calc(var(--u) * 1.4);
+    justify-items: center;
+    align-content: center;
+    width: 100%;
+  }
+  .t-team > *:not(.t-group) {
+    grid-column: 1 / -1;
+  }
+  /* Mesmo teto do mobile (52u): o painel ocupa a coluna inteira, então a
+     largura que sobra no desktop vira botão maior, não espaço vazio. */
+  .t-group {
+    max-width: calc(var(--u) * 52);
+    width: 100%;
+    align-self: start;
+  }
+  /* Quando a coluna é mais larga que o teto, os dois painéis se encostam
+     no meio do time (sob o placar) e a sobra fica nas bordas. */
+  .t-group:nth-of-type(1) {
+    justify-self: end;
+  }
+  .t-group:nth-of-type(2) {
+    justify-self: start;
+  }
+}
+
+/* Viewports muito baixas (celular deitado, janela achatada): com --u
+   pequeno os pisos em px (contornos de 2px, bordas de 1.5px) somam altura
+   fora de escala e o conteúdo encosta no limite do quadro. A unidade
+   recua um pouco para nada ser cortado. */
+@media (max-height: 500px) {
+  .t-team {
+    --u: min(0.88cqh, 2.6cqw, 12px);
+  }
+}
+@media (min-width: 860px) and (min-aspect-ratio: 13 / 10) and (max-height: 500px) {
+  .t-team {
+    --u: min(1.15cqh, 2.2cqw, 15px);
+  }
+}
+
+/* Telas grandes: --u para de crescer em 15px, então o que ainda aproveita
+   a tela é largura — um quadro mais largo dá painéis (e áreas de toque)
+   maiores em vez de faixas vazias nas laterais. */
+@media (min-width: 1200px) {
+  .t-main {
+    max-width: min(1600px, 94vw);
+  }
+  .t-home-icon {
+    max-width: min(660px, 100%);
   }
 }
 
@@ -1116,14 +1298,22 @@ button:disabled {
   :root {
     --t-outline: 2.5px;
   }
-  .t-score-number {
-    font-size: 68px;
-    -webkit-text-stroke-width: 5px;
+}
+
+/* Navegadores sem unidades de container (Chrome < 105, Safari < 16,
+   Firefox < 110) não resolvem --u: aí o placar usa tamanho fixo e a
+   página volta a poder rolar, em vez de quebrar. */
+@supports not (height: 1cqh) {
+  .t-shell {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
   }
-  .t-ctrl {
-    width: 54px;
-    height: 54px;
-    font-size: 26px;
+  .t-main {
+    overflow: visible;
+  }
+  .t-team {
+    --u: 6.5px;
   }
 }
 
