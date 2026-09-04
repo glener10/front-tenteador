@@ -173,7 +173,12 @@ export function ScoreScreen({ match, onExit, onMatchChange }: Props) {
         />
       </div>
 
-      {showFooter ? <div className="t-score-hint">Se está jogando em trios, não tem mais testa.</div> : null}
+      <div
+        className={`t-score-hint ${showFooter ? "" : "t-score-hint-hidden"}`}
+        role="status"
+      >
+        Se está jogando em trios, não tem mais testa.
+      </div>
 
       {winner ? (
         <>

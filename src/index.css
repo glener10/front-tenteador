@@ -689,6 +689,9 @@ button:disabled {
   font-weight: 700;
   color: var(--t-text-sec);
 }
+.t-score-hint-hidden {
+  visibility: hidden;
+}
 
 /* ---------- Overlay de vitória ---------- */
 .t-overlay {
