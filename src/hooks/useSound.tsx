@@ -8,7 +8,7 @@ const STORAGE_KEY = "t-sound";
 const SKIP_SELECTOR = ".t-ctrl, .t-aux, .t-block, .t-flor, [data-sound='none']";
 
 function initialEnabled(): boolean {
-  return localStorage.getItem(STORAGE_KEY) !== "0";
+  return localStorage.getItem(STORAGE_KEY) === "1";
 }
 
 type SoundContextValue = {
