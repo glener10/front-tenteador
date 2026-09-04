@@ -1,14 +1,12 @@
-import historySound from "../../assets/sounds/history.mp3";
+import menuClickSound from "../../assets/sounds/menu_click.mp3";
 import minusSound from "../../assets/sounds/minus.mp3";
 import plusSound from "../../assets/sounds/plus.mp3";
-import startSound from "../../assets/sounds/inicio_partida.mp3";
 import victorySound from "../../assets/sounds/victory.mp3";
 
-export type SoundName = "start" | "history" | "plus" | "minus" | "victory";
+export type SoundName = "menu" | "plus" | "minus" | "victory";
 
 const FILES: Record<SoundName, string> = {
-    start: startSound,
-    history: historySound,
+    menu: menuClickSound,
     plus: plusSound,
     minus: minusSound,
     victory: victorySound,

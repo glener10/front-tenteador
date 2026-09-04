@@ -29,14 +29,24 @@ function AppContent() {
   const { play } = useSound();
 
   const startMatch = () => {
-    play("start");
+    play("menu");
     setActiveMatch(createMatch());
     setScreen("match");
   };
 
   const openHistory = () => {
-    play("history");
+    play("menu");
     setHistoryOpen(true);
+  };
+
+  const openRules = () => {
+    play("menu");
+    setRulesOpen(true);
+  };
+
+  const openDonate = () => {
+    play("menu");
+    setDonateOpen(true);
   };
 
   return (
@@ -58,10 +68,7 @@ function AppContent() {
           />
         ) : null}
       </div>
-      <AppFooter
-        onOpenAbout={() => setRulesOpen(true)}
-        onOpenDonate={() => setDonateOpen(true)}
-      />
+      <AppFooter onOpenAbout={openRules} onOpenDonate={openDonate} />
 
       <RulesModal visible={rulesOpen} onClose={() => setRulesOpen(false)} />
       <DonateModal visible={donateOpen} onClose={() => setDonateOpen(false)} />
