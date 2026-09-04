@@ -6,7 +6,7 @@ import { NameEditModal } from "./components/NameEditModal";
 import { RulesModal } from "./components/RulesModal";
 import { DonateModal } from "./components/DonateModal";
 import { ThemeProvider } from "./hooks/useTheme";
-import { SoundProvider, useSound } from "./hooks/useSound";
+import { SoundProvider } from "./hooks/useSound";
 import { HomeScreen } from "./screens/HomeScreen";
 import { ScoreScreen } from "./screens/ScoreScreen";
 import {
@@ -26,26 +26,21 @@ function AppContent() {
   const [historyOpen, setHistoryOpen] = useState(false);
   const [donateOpen, setDonateOpen] = useState(false);
   const [nameOpen, setNameOpen] = useState(false);
-  const { play } = useSound();
 
   const startMatch = () => {
-    play("menu");
     setActiveMatch(createMatch());
     setScreen("match");
   };
 
   const openHistory = () => {
-    play("menu");
     setHistoryOpen(true);
   };
 
   const openRules = () => {
-    play("menu");
     setRulesOpen(true);
   };
 
   const openDonate = () => {
-    play("menu");
     setDonateOpen(true);
   };
 
