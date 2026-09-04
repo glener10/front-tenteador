@@ -6,6 +6,7 @@ import { NameEditModal } from "./components/NameEditModal";
 import { RulesModal } from "./components/RulesModal";
 import { DonateModal } from "./components/DonateModal";
 import { ThemeProvider } from "./hooks/useTheme";
+import { SoundProvider, useSound } from "./hooks/useSound";
 import { HomeScreen } from "./screens/HomeScreen";
 import { ScoreScreen } from "./screens/ScoreScreen";
 import {
@@ -25,10 +26,17 @@ function AppContent() {
   const [historyOpen, setHistoryOpen] = useState(false);
   const [donateOpen, setDonateOpen] = useState(false);
   const [nameOpen, setNameOpen] = useState(false);
+  const { play } = useSound();
 
   const startMatch = () => {
+    play("start");
     setActiveMatch(createMatch());
     setScreen("match");
+  };
+
+  const openHistory = () => {
+    play("history");
+    setHistoryOpen(true);
   };
 
   return (
@@ -36,15 +44,12 @@ function AppContent() {
       <AppHeader
         title={screen === "match" ? (activeMatch?.name ?? "Partida") : undefined}
         onBack={screen === "match" ? () => setScreen("home") : undefined}
-        onOpenHistory={screen === "match" ? () => setHistoryOpen(true) : undefined}
+        onOpenHistory={screen === "match" ? openHistory : undefined}
         onTitlePress={screen === "match" ? () => setNameOpen(true) : undefined}
       />
       <div className="t-main">
         {screen === "home" ? (
-          <HomeScreen
-            onStartMatch={startMatch}
-            onOpenHistory={() => setHistoryOpen(true)}
-          />
+          <HomeScreen onStartMatch={startMatch} onOpenHistory={openHistory} />
         ) : activeMatch ? (
           <ScoreScreen
             match={activeMatch}
@@ -99,7 +104,9 @@ function AppContent() {
 export default function App() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <SoundProvider>
+        <AppContent />
+      </SoundProvider>
     </ThemeProvider>
   );
 }

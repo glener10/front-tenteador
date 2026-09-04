@@ -1,3 +1,4 @@
+import { SoundToggle } from "./SoundToggle";
 import { ThemeToggle } from "./ThemeToggle";
 
 type Props = {
@@ -44,6 +45,7 @@ export function AppHeader({ title, onBack, onOpenHistory, onTitlePress }: Props)
             ☰
           </button>
         ) : null}
+        <SoundToggle />
         <ThemeToggle />
       </div>
     </header>

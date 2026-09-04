@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Confetti } from "../components/Confetti";
 import { NameEditModal } from "../components/NameEditModal";
+import { useSound } from "../hooks/useSound";
 import {
   appendEvent,
   finalizeMatch,
@@ -37,6 +38,7 @@ export function ScoreScreen({ match, onExit, onMatchChange }: Props) {
   const sessionRef = useRef<MatchRecord>(match);
   const [scores, setScores] = useState<Record<TeamName, number>>(() => matchScore(match));
   const [renameTeamName, setRenameTeamName] = useState<TeamName | null>(null);
+  const { play } = useSound();
 
   useEffect(() => {
     sessionRef.current = match;
@@ -50,6 +52,7 @@ export function ScoreScreen({ match, onExit, onMatchChange }: Props) {
   };
 
   const adjust = (team: TeamName, delta: number, action: string) => {
+    play(delta > 0 ? "plus" : "minus");
     recordEvent(team, action, delta);
     setScores((current) => ({
       ...current,
@@ -96,6 +99,18 @@ export function ScoreScreen({ match, onExit, onMatchChange }: Props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [winner]);
+
+  const victoryPlayedRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (winner) {
+      if (victoryPlayedRef.current !== match.id) {
+        victoryPlayedRef.current = match.id;
+        play("victory");
+      }
+    } else {
+      victoryPlayedRef.current = null;
+    }
+  }, [winner, match.id, play]);
 
   const showFooter = scores.us >= FOOTER_POINTS || scores.them >= FOOTER_POINTS;
 
